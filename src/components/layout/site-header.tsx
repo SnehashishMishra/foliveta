@@ -23,13 +23,13 @@ export function SiteHeader() {
         <Link
           href="/"
           className="inline-flex items-center gap-2.5 rounded-xl text-[1.35rem] font-extrabold tracking-[-0.07em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-          aria-label="Folio home"
+          aria-label="Foliveta home"
         >
           <span className="grid size-10 place-items-center rounded-xl border border-[#e4e5fb] bg-linear-to-br from-white to-accent text-primary shadow-sm">
             <IconBook2 size={23} stroke={1.8} />
           </span>
           <span>
-            folio<span className="text-primary">.</span>
+            Foliveta<span className="text-primary">.</span>
           </span>
         </Link>
         <nav className="flex items-center gap-1.5" aria-label="Main navigation">
