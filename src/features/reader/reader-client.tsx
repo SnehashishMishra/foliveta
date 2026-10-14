@@ -311,16 +311,16 @@ export function ReaderClient() {
                 setIsDragging(false);
             }}
             onDrop={(event) => void onDrop(event)}
-            className={`relative flex min-h-[280px] flex-col items-center justify-center rounded-[1.5rem] border-2 border-dashed px-4 py-5 text-center transition-colors sm:min-h-[300px] sm:px-8 ${isDragging ? "border-primary bg-accent/70" : "border-[#d9dcef] bg-gradient-to-b from-white/80 to-[#f7f7ff]/70 hover:border-primary/50 hover:bg-accent/20"}`}
+            className={`relative flex min-h-70 flex-col items-center justify-center rounded-[1.5rem] border-2 border-dashed px-4 py-5 text-center transition-colors sm:min-h-75 sm:px-8 ${isDragging ? "border-primary bg-accent/70" : "border-[#d9dcef] bg-linear-to-b from-white/80 to-[#f7f7ff]/70 hover:border-primary/50 hover:bg-accent/20"}`}
             role="region"
             aria-label="PDF upload drop zone"
           >
             <div
-              className={`mb-6 grid size-20 place-items-center rounded-[1.7rem] border border-[#e4e5fb] bg-gradient-to-br from-white to-[#e9eaff] text-primary shadow-[0_12px_30px_rgba(91,91,214,0.12)] transition-transform ${isDragging ? "scale-105" : ""}`}
+              className={`mb-6 grid size-20 place-items-center rounded-[1.7rem] border border-[#e4e5fb] bg-linear-to-br from-white to-accent text-primary shadow-[0_12px_30px_rgba(91,91,214,0.12)] transition-transform ${isDragging ? "scale-105" : ""}`}
             >
               <IconCloudUpload size={38} stroke={1.4} />
             </div>
-            <h2 className="text-2xl font-extrabold tracking-[-0.05em] sm:text-3xl">
+            <h2 className="text-2xl font-extrabold tracking-tighter sm:text-3xl">
               {isDragging
                 ? "Drop your PDF here"
                 : busy
@@ -386,7 +386,7 @@ export function ReaderClient() {
             </div>
             <ActionButton
               variant="ghost"
-              className="size-8 shrink-0 !p-0"
+              className="size-8 shrink-0 p-0!"
               onClick={closeBook}
               aria-label="Close current book"
               title="Close book"

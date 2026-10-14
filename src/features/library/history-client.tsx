@@ -142,7 +142,7 @@ export function HistoryClient() {
         )}
       </div>
 
-      <div className="mb-5 flex items-start gap-3 rounded-2xl border border-primary/10 bg-gradient-to-r from-white/90 to-accent/50 p-4 sm:p-5">
+      <div className="mb-5 flex items-start gap-3 rounded-2xl border border-primary/10 bg-linear-to-r from-white/90 to-accent/50 p-4 sm:p-5">
         <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-white text-primary shadow-sm">
           <IconLock size={20} />
         </div>
@@ -186,7 +186,7 @@ export function HistoryClient() {
           <p>Loading your library…</p>
         </div>
       ) : books.length === 0 ? (
-        <section className="mx-auto grid max-w-2xl justify-items-center rounded-[2rem] border border-white/90 bg-white/75 px-5 py-12 text-center shadow-glass backdrop-blur-xl sm:px-10 sm:py-16">
+        <section className="mx-auto grid max-w-2xl justify-items-center rounded-4xl border border-white/90 bg-white/75 px-5 py-12 text-center shadow-glass backdrop-blur-xl sm:px-10 sm:py-16">
           <div className="grid size-16 place-items-center rounded-2xl bg-accent text-primary">
             <IconHistory size={29} />
           </div>
@@ -262,7 +262,7 @@ export function HistoryClient() {
                 </ActionButton>
                 <ActionButton
                   variant="ghost"
-                  className="size-10 !p-0"
+                  className="size-10 p-0!"
                   onClick={() => setConfirmation({ kind: "one", book })}
                   aria-label={`Remove ${book.title} from history`}
                   title="Remove from history"
@@ -278,7 +278,7 @@ export function HistoryClient() {
       <AnimatePresence>
         {confirmation && (
           <motion.div
-            className="fixed inset-0 z-[120] grid place-items-center overflow-y-auto bg-[#20233a]/35 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-120 grid place-items-center overflow-y-auto bg-[#20233a]/35 p-4 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
