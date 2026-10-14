@@ -1,0 +1,559 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-serif: Georgia, Cambria, "Times New Roman", serif;
+  --color-background: #f7f8fc;
+  --color-foreground: #24283b;
+  --color-card: #ffffff;
+  --color-card-foreground: #24283b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #24283b;
+  --color-primary: #5b5bd6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #eceef8;
+  --color-secondary-foreground: #343750;
+  --color-muted: #f0f1f7;
+  --color-muted-foreground: #71778b;
+  --color-accent: #e9eaff;
+  --color-accent-foreground: #4545a8;
+  --color-border: #e3e6f0;
+  --color-input: #d9deeb;
+  --color-ring: #7777e8;
+  --color-success: #23865b;
+  --color-warning: #a96512;
+  --color-destructive: #c34252;
+  --radius-card: 1.5rem;
+  --shadow-glass: 0 18px 55px rgb(47 54 98 / 8%);
+  --shadow-card: 0 8px 30px rgb(47 54 98 / 6%);
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+}
+
+@layer base {
+  html {
+    min-width: 320px;
+    scroll-behavior: smooth;
+  }
+  body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  button,
+  input {
+    font: inherit;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  ::selection {
+    background: #dedfff;
+    color: #24283b;
+  }
+}
+
+/* Reader is a viewport workspace: controls stay visible without document scrolling. */
+html:has(.reader-page) {
+  height: 100%;
+  overflow: hidden;
+  scroll-behavior: auto;
+}
+body:has(.reader-page) {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+body:has(.reader-page) > header > div {
+  min-height: 3.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+body:has(.reader-page) > header a[aria-label="Folio home"] > span:first-child {
+  width: 2rem;
+  height: 2rem;
+}
+body:has(.reader-page) > header a[aria-label="Folio home"] {
+  font-size: 1.15rem;
+}
+body:has(.reader-page) > header nav a {
+  min-height: 2rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+.reader-page {
+  height: calc(100dvh - 3.25rem);
+  min-height: 0;
+}
+.reader-page-active .reader-book-shell {
+  min-height: 0;
+}
+.reader-page-active .reader-book-shell > div[ref] {
+  min-height: 0;
+}
+.reader-book-stage {
+  min-height: 0;
+  flex: 1;
+}
+.reader-book-visible {
+  visibility: visible;
+  opacity: 1;
+  min-height: 0;
+}
+.reader-page-active .reader-book-shell > div {
+  min-height: 0;
+}
+@media (max-height: 760px) {
+  .reader-page {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  .reader-heading {
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* Required geometry and paper styling for the page-flip engine. */
+.flipbook-container {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+}
+.flipbook-container > .react-pdf__Document {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+}
+.flipbook-stage {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 12px 42px;
+}
+.flipbook-book-viewport {
+  display: flex;
+  flex: 0 0 auto;
+  width: max-content;
+  height: max-content;
+  min-width: 100%;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+.flipbook-stage.is-zoomed {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.flipbook-stage.is-zoomed .flipbook-book-viewport {
+  margin: auto;
+}
+.folio-flipbook {
+  margin-inline: auto;
+}
+.pdf-flip-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgb(30 35 60 / 5%);
+}
+.pdf-flip-page .react-pdf__Page {
+  display: flex;
+  width: 100% !important;
+  height: 100% !important;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.pdf-flip-page .react-pdf__Page__canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.pdf-page-number {
+  position: absolute;
+  right: 11px;
+  bottom: 8px;
+  z-index: 2;
+  color: #9296a6;
+  font-size: 10px;
+  pointer-events: none;
+}
+.page-skeleton {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  place-items: center;
+  color: #b3b7c7;
+  background: linear-gradient(110deg, #fff 8%, #f5f6fb 18%, #fff 33%);
+  background-size: 200% 100%;
+  animation: folio-shimmer 1.5s linear infinite;
+}
+@keyframes folio-shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+.page-placeholder {
+  border: 1px solid #eceef6;
+}
+.page-edge-control {
+  position: absolute;
+  z-index: 10;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 90%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 88%);
+  box-shadow: 0 5px 18px rgb(45 50 90 / 10%);
+  backdrop-filter: blur(16px);
+}
+.page-edge-left {
+  left: 5px;
+}
+.page-edge-right {
+  right: 5px;
+}
+.reader-controls-row {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  padding: 8px 2px 1px;
+}
+.reader-page-navigation,
+.reader-control-actions {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+.page-counter {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid #e3e6f0;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 82%);
+  color: #71778b;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.page-counter svg {
+  color: #5b5bd6;
+}
+.page-counter strong {
+  color: #24283b;
+}
+.page-jump-control {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px 3px 9px;
+  border: 1px solid #e3e6f0;
+  border-radius: 12px;
+  background: #fff;
+  color: #71778b;
+  font-size: 11px;
+}
+.page-jump-control input {
+  width: 42px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #24283b;
+  font-variant-numeric: tabular-nums;
+}
+.page-jump-control input::-webkit-inner-spin-button,
+.page-jump-control input::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+.page-jump-control span:last-child {
+  padding: 5px 7px;
+  border-radius: 8px;
+  background: #eceef8;
+  color: #4545a8;
+  font-weight: 700;
+}
+.view-mode-switch,
+.zoom-control {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid #e3e6f0;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 80%);
+}
+.view-mode-switch button {
+  min-height: 28px;
+  padding: 5px 8px;
+  border-radius: 9px;
+  font-size: 10px;
+}
+.zoom-control {
+  gap: 1px;
+}
+.zoom-button {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0;
+  border-radius: 8px;
+}
+.zoom-readout {
+  min-width: 43px;
+  height: 28px;
+  border-radius: 8px;
+  color: #4545a8;
+  font-size: 10px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.zoom-readout:hover {
+  background: #eceef8;
+}
+.flipbook-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  background: #f7f8fc;
+  overflow: hidden;
+}
+.flipbook-fullscreen > .react-pdf__Document {
+  min-height: 0;
+}
+.flipbook-fullscreen .flipbook-stage {
+  padding: 8px 48px;
+}
+.flipbook-fullscreen .reader-controls-row {
+  flex-shrink: 0;
+}
+.flipbook-fullscreen-heading {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #71778b;
+  font-size: 12px;
+}
+.flipbook-fullscreen-heading button {
+  min-height: 32px;
+}
+.reader-loading,
+.reader-error {
+  display: grid;
+  min-height: 200px;
+  flex: 1;
+  place-content: center;
+  justify-items: center;
+  gap: 9px;
+  padding: 24px;
+  text-align: center;
+  color: #71778b;
+  font-size: 13px;
+}
+.loading-spinner {
+  width: 27px;
+  height: 27px;
+  border: 2px solid rgb(91 91 214 / 18%);
+  border-top-color: #5b5bd6;
+  border-radius: 50%;
+  animation: folio-spin 0.8s linear infinite;
+}
+@keyframes folio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.reader-error h3 {
+  margin-top: 7px;
+  color: #24283b;
+  font-size: 16px;
+  font-weight: 750;
+}
+.reader-error p {
+  max-width: 300px;
+  line-height: 1.6;
+}
+.notice-error {
+  margin: 6px;
+  padding: 8px 12px;
+  border: 1px solid rgb(195 66 82 / 18%);
+  border-radius: 10px;
+  background: #fff1f2;
+  color: #a93847;
+  font-size: 12px;
+}
+@media (max-width: 767px) {
+  .flipbook-stage {
+    padding: 8px 30px;
+  }
+  .page-edge-control {
+    width: 31px;
+    height: 31px;
+    min-height: 31px;
+  }
+  .page-edge-left {
+    left: 0;
+  }
+  .page-edge-right {
+    right: 0;
+  }
+  .reader-controls-row {
+    justify-content: center;
+  }
+  .reader-page-navigation,
+  .reader-control-actions {
+    justify-content: center;
+  }
+  .flipbook-fullscreen .flipbook-stage {
+    padding-inline: 32px;
+  }
+  .zoom-reset {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-skeleton,
+  .loading-spinner {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+.reading-progress-slider {
+  width: clamp(84px, 12vw, 150px);
+  height: 4px;
+  flex: 1 1 84px;
+  max-width: 150px;
+  accent-color: #5b5bd6;
+  cursor: pointer;
+}
+.reading-progress-slider:focus-visible {
+  outline: 2px solid #7777e8;
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+@media (max-width: 767px) {
+  .reading-progress-slider {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+    margin: 0 12px 3px;
+  }
+}
+
+.reader-interaction-hint {
+  color: #9296a6;
+  font-size: 10px;
+  white-space: nowrap;
+}
+@media (max-width: 1023px) {
+  .reader-interaction-hint {
+    display: none;
+  }
+}
+
+/* Mobile reader sizing and navigation refinements. Append to globals.css. */
+@media (max-width: 900px) {
+  .flipbook-stage {
+    padding: 6px 12px;
+  }
+
+  .flipbook-fullscreen .flipbook-stage {
+    padding-inline: 12px;
+  }
+
+  /* The side controls move into the bottom control bar on phones. */
+  .desktop-page-edge-control {
+    display: none !important;
+  }
+
+  .reader-controls-row {
+    gap: 7px;
+    padding-top: 6px;
+    padding-bottom: max(4px, env(safe-area-inset-bottom));
+  }
+
+  .reader-control-actions {
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .mobile-reader-nav {
+    display: inline-flex;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    flex: 0 0 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .reader-fullscreen-button {
+    min-height: 40px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 901px) {
+  .mobile-reader-nav {
+    display: none !important;
+  }
+}
