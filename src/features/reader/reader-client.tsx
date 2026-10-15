@@ -347,14 +347,6 @@ export function ReaderClient() {
               PDF up to 100 MB
             </span>
           </div>
-          <div className="mt-7.25 flex flex-col gap-1.5 rounded-[14px] border border-[#ebedf6] bg-[rgb(244_245_252/72%)] px-4.25 py-3.75 text-left [&>strong]:text-[11px] [&>strong]:text-[#575d74] [&>span]:text-[11px] [&>span]:leading-[1.65] [&>span]:text-[#81869a]">
-            <strong>Good to know</strong>
-            <span>
-              For privacy, the PDF itself is temporary. History remembers the
-              book name and can reopen it when your browser supports saved file
-              access.
-            </span>
-          </div>
         </section>
       ) : (
         <section className="flex min-h-0 flex-1 flex-col overflow-hidden border-0! rounded-none! bg-transparent! shadow-none! px-0! pb-0! pt-0!">
