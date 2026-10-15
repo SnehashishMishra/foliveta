@@ -36,7 +36,7 @@ export function ActionButton({
     <motion.button
       type={type}
       whileTap={{ scale: 0.97 }}
-      whileHover={{ y: -1 }}
+      whileHover={{ y: -1, cursor: "pointer" }}
       transition={{ type: "spring", stiffness: 500, damping: 28 }}
       className={`${base} ${variants[variant]} ${className}`.trim()}
       {...props}
