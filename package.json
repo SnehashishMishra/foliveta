@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.49.0",
@@ -15,6 +16,7 @@
     "pdfjs-dist": "^6.3.289",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "react-fast-marquee": "^1.6.5",
     "react-pageflip": "^2.0.3",
     "react-pdf": "^11.0.0"
   },

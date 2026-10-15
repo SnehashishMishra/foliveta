@@ -53,6 +53,8 @@ export function HistoryClient() {
   }, []);
 
   useEffect(() => {
+    // Load IndexedDB-backed history when this screen mounts.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh();
   }, [refresh]);
 
@@ -326,11 +328,17 @@ export function HistoryClient() {
                 <ActionButton
                   variant="danger"
                   onClick={() => void confirmDelete()}
+                  className="text-black group"
                 >
-                  <IconTrash size={17} />{" "}
-                  {confirmation.kind === "all"
-                    ? "Clear history"
-                    : "Remove book"}
+                  <IconTrash
+                    size={17}
+                    className="text-black group-hover:text-white"
+                  />{" "}
+                  <span className="text-black group-hover:text-white">
+                    {confirmation.kind === "all"
+                      ? "Clear history"
+                      : "Remove book"}
+                  </span>
                 </ActionButton>
               </div>
             </motion.section>
