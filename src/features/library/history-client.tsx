@@ -328,17 +328,11 @@ export function HistoryClient() {
                 <ActionButton
                   variant="danger"
                   onClick={() => void confirmDelete()}
-                  className="text-black group"
                 >
-                  <IconTrash
-                    size={17}
-                    className="text-black group-hover:text-white"
-                  />{" "}
-                  <span className="text-black group-hover:text-white">
-                    {confirmation.kind === "all"
-                      ? "Clear history"
-                      : "Remove book"}
-                  </span>
+                  <IconTrash size={17} />{" "}
+                  {confirmation.kind === "all"
+                    ? "Clear history"
+                    : "Remove book"}
                 </ActionButton>
               </div>
             </motion.section>

@@ -404,7 +404,7 @@ export function PdfFlipbook({
                       startZIndex={0}
                       swipeDistance={30}
                       disableFlipByClick={isZoomed}
-                      className="folio-flipbook m-0"
+                      className="m-0"
                       style={{}}
                       onInit={handleBookInit}
                       onFlip={handleFlip}

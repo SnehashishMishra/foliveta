@@ -29,8 +29,8 @@ const PdfFlipbook = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="reader-loading">
-        <span className="loading-spinner" />
+      <div className="flex min-h-[220px] items-center justify-center gap-3 text-[13px] text-[#777d90]">
+        <span className="inline-block size-[21px] animate-spin rounded-full border-2 border-[#dfe1f5] border-t-[#5b5bd6] motion-reduce:animate-none" />
         <p>Preparing your reading space…</p>
       </div>
     ),
@@ -197,25 +197,35 @@ export function ReaderClient() {
   );
   return (
     <main
-      className={`reader-page ${file ? "box-border flex h-[calc(100dvh-66px)] max-h-[calc(100dvh-66px)] min-h-0 w-full flex-col overflow-hidden px-0! py-0! mx-0! max-w-none!" : "shell"}`}
+      data-reader-page
+      className={
+        file
+          ? "box-border flex h-[calc(100dvh-66px)] max-h-[calc(100dvh-66px)] min-h-0 w-full flex-col overflow-hidden px-0! py-0! mx-0! max-w-none!"
+          : "mx-auto w-[min(1160px,calc(100%_-_48px))] min-h-[calc(100vh-76px)] pt-[43px] pb-[72px] max-[767px]:w-[min(calc(100%_-_32px),600px)] max-[767px]:min-h-[calc(100vh-66px)] max-[767px]:pt-7 max-[767px]:pb-[46px] max-[380px]:w-[calc(100%_-_24px)]"
+      }
     >
       <input
         ref={inputRef}
-        className="visually-hidden"
+        className="sr-only"
         type="file"
         accept="application/pdf,.pdf"
         onChange={onFileInputChange}
         aria-label="Choose a PDF file"
       />
       <div
-        className={`reader-heading-row ${file ? "mb-1! flex-row! flex min-h-0 shrink-0 items-center justify-between gap-2! px-2! py-0.5! lg:gap-3!" : ""}`}
+        className={`flex items-end justify-between gap-6 mb-[30px] max-[767px]:items-start max-[767px]:flex-col max-[767px]:gap-[17px] max-[767px]:mb-[22px] ${file ? "mb-1! flex-row! flex min-h-0 shrink-0 items-center justify-between gap-2! px-2! py-0.5! lg:gap-3!" : ""}`}
       >
         <div className={file ? "hidden" : ""}>
-          <Link href="/" className="back-link">
+          <Link
+            href="/"
+            className="mb-[15px] inline-flex items-center gap-1.5 text-xs [font-weight:650] text-[#777d90] hover:text-primary"
+          >
             <IconArrowLeft size={16} /> Back home
           </Link>
-          <h1 className="page-title">Your reading space</h1>
-          <p className="page-subtitle">
+          <h1 className="m-0 text-[clamp(29px,3.2vw,39px)] leading-[1.15] tracking-[-1.7px]">
+            Your reading space
+          </h1>
+          <p className="mt-[10px] mb-0 text-sm leading-[1.6] text-[#777d90]">
             A calm place for the books you already own.
           </p>
         </div>
@@ -259,7 +269,7 @@ export function ReaderClient() {
           </div>
         )}
         <div
-          className={`reader-top-actions ${file ? "w-auto! shrink-0! gap-1! *:flex-none!" : ""}`}
+          className={`flex shrink-0 items-center gap-[9px] max-[767px]:w-full max-[767px]:[&>*]:flex-1 max-[767px]:[&_button]:justify-center ${file ? "w-auto! shrink-0! gap-1! *:flex-none!" : ""}`}
         >
           {file && (
             <ActionButton
@@ -273,7 +283,10 @@ export function ReaderClient() {
         </div>
       </div>
       {error && (
-        <div className="notice notice-error" role="alert">
+        <div
+          className="my-[14px] flex items-start gap-[9px] rounded-[13px] border border-[#f2d0d4] bg-[#fff2f3] px-[14px] py-3 text-xs leading-[1.65] text-[#a83d4b] [&>span]:flex-1 [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center [&_button]:border-0 [&_button]:bg-transparent [&_button]:p-0 [&_button]:text-inherit [&_button]:cursor-pointer"
+          role="alert"
+        >
           <IconX size={18} />
           <span>{error}</span>
           <button aria-label="Dismiss error" onClick={() => setError("")}>
@@ -282,7 +295,10 @@ export function ReaderClient() {
         </div>
       )}
       {notice && (
-        <div className="notice notice-info" role="status">
+        <div
+          className="my-[14px] flex items-start gap-[9px] rounded-[13px] border border-[#dfe1ff] bg-[#f0f1ff] px-[14px] py-3 text-xs leading-[1.65] text-[#5155a4] [&>span]:flex-1 [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center [&_button]:border-0 [&_button]:bg-transparent [&_button]:p-0 [&_button]:text-inherit [&_button]:cursor-pointer"
+          role="status"
+        >
           <IconLock size={18} />
           <span>{notice}</span>
           <button aria-label="Dismiss notice" onClick={() => setNotice("")}>
@@ -291,43 +307,47 @@ export function ReaderClient() {
         </div>
       )}
       {!file ? (
-        <section className="upload-card glass-panel">
-          <div className="upload-art">
-            <div className="upload-art-sheet sheet-back" />
-            <div className="upload-art-sheet sheet-front">
+        <section className="mx-auto mt-[35px] w-full max-w-[760px] rounded-[27px] border border-[#e4e6f2] bg-[linear-gradient(145deg,rgb(255_255_255_/_88%),rgb(255_255_255_/_65%))] px-[30px] pb-[27px] pt-[47px] text-center shadow-[0_18px_55px_rgb(47_54_98_/_8%)] backdrop-blur-[18px] max-[767px]:mt-[18px] max-[767px]:rounded-[22px] max-[767px]:px-[19px] max-[767px]:pb-5 max-[767px]:pt-[35px]">
+          <div className="relative mx-auto mb-[25px] h-[102px] w-[110px]">
+            <div className="absolute left-[15px] top-[7px] h-[78px] w-[61px] rotate-[-12deg] rounded-[9px] border border-[#dedff1] bg-[#f0f0ff] shadow-[0_8px_20px_rgb(70_74_130_/_8%)]" />
+            <div className="absolute left-[34px] top-[5px] flex h-[78px] w-[61px] rotate-[5deg] flex-col items-center justify-center gap-0.5 rounded-[9px] border border-[#dedff1] bg-[linear-gradient(145deg,#fff,#f7f7ff)] text-[#6565cf] shadow-[0_8px_20px_rgb(70_74_130_/_8%)] [&>span]:text-[9px] [&>span]:font-extrabold [&>span]:tracking-[1px]">
               <IconFileTypePdf size={38} stroke={1.3} />
               <span>PDF</span>
             </div>
-            <div className="upload-art-sparkle">
+            <div className="absolute bottom-[2px] right-[2px] grid size-10 place-items-center rounded-[14px] border border-[#e7e7fa] bg-white/90 text-[#5656c8] shadow-[0_6px_18px_rgb(70_74_130_/_9%)]">
               <IconBook2 size={22} />
             </div>
           </div>
-          <h2>{busy ? "Opening your book…" : "Bring a book to life."}</h2>
-          <p>
+          <h2 className="m-0 text-[25px] tracking-[-0.9px] max-[767px]:text-[22px]">
+            {busy ? "Opening your book…" : "Bring a book to life."}
+          </h2>
+          <p className="mx-auto mb-6 mt-[11px] max-w-[475px] text-[13px] leading-[1.8] text-[#7b8092] max-[767px]:text-xs">
             Choose a PDF from your device. It will be rendered locally in your
             browser and won't be uploaded to a server.
           </p>
           <ActionButton
             variant="primary"
-            className="button-large"
+            className="mx-auto min-h-[49px]! rounded-[15px]! px-[19px]! py-[14px]! text-sm!"
             onClick={openFile}
             disabled={busy}
           >
             {busy ? (
-              <span className="loading-spinner spinner-small" />
+              <span className="inline-block size-[15px] animate-spin rounded-full border-2 border-[#dfe1f5] border-t-[#5b5bd6] motion-reduce:animate-none" />
             ) : (
               <IconUpload size={19} />
             )}{" "}
             {busy ? "Checking PDF…" : "Choose a PDF"}
           </ActionButton>
-          <div className="upload-meta">
-            <span>
+          <div className="mt-5 flex items-center justify-center gap-[13px] text-[10px] text-[#858a9b] max-[767px]:flex-wrap max-[767px]:gap-2">
+            <span className="inline-flex items-center gap-[5px] [&_svg]:text-[#7b7da7]">
               <IconLock size={15} /> Private by default
             </span>
-            <i />
-            <span>PDF up to 100 MB</span>
+            <i className="size-[3px] rounded-full bg-[#b7bbca]" />
+            <span className="inline-flex items-center gap-[5px]">
+              PDF up to 100 MB
+            </span>
           </div>
-          <div className="upload-tip">
+          <div className="mt-[29px] flex flex-col gap-[6px] rounded-[14px] border border-[#ebedf6] bg-[rgb(244_245_252_/_72%)] px-[17px] py-[15px] text-left [&>strong]:text-[11px] [&>strong]:text-[#575d74] [&>span]:text-[11px] [&>span]:leading-[1.65] [&>span]:text-[#81869a]">
             <strong>Good to know</strong>
             <span>
               For privacy, the PDF itself is temporary. History remembers the
@@ -337,14 +357,14 @@ export function ReaderClient() {
           </div>
         </section>
       ) : (
-        <section className="active-reader-section flex min-h-0 flex-1 flex-col overflow-hidden border-0! rounded-none! bg-transparent! shadow-none! px-0! pb-0! pt-0!">
+        <section className="flex min-h-0 flex-1 flex-col overflow-hidden border-0! rounded-none! bg-transparent! shadow-none! px-0! pb-0! pt-0!">
           <PdfFlipbook
             file={file}
             initialPage={initialPage}
             onPageCount={onPageCount}
             onPageChange={onPageChange}
           />
-          <p className="reader-privacy-line hidden!">
+          <p className="hidden!">
             <IconLock size={15} /> This PDF is being read locally. Closing the
             reader clears the active session.
           </p>

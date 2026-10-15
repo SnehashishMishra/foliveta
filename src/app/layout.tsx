@@ -64,8 +64,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <body>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className="min-w-80 scroll-smooth has-[main[data-reader-page]]:h-full has-[main[data-reader-page]]:overflow-hidden has-[main[data-reader-page]]:scroll-auto selection:bg-[#dedfff] selection:text-[#24283b]"
+    >
+      <body className="m-0 bg-background font-sans text-foreground antialiased has-[main[data-reader-page]]:h-full has-[main[data-reader-page]]:min-h-0 has-[main[data-reader-page]]:overflow-hidden">
         <PdfSessionProvider>
           <SiteHeader />
           {children}

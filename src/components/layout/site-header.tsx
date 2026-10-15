@@ -15,17 +15,17 @@ export function SiteHeader() {
   }, [pathname, clearSession]);
 
   const navClass = (active: boolean) =>
-    `inline-flex min-h-10 items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${active ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-white/80 hover:text-foreground"}`;
+    `inline-flex min-h-10 items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${active ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-white/80 hover:text-foreground"} [body:has(main[data-reader-page])_&]:min-h-8 [body:has(main[data-reader-page])_&]:py-[0.35rem]`;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-2xl">
-      <div className="mx-auto flex min-h-18 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-18 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 [body:has(main[data-reader-page])_&]:min-h-13 [body:has(main[data-reader-page])_&]:py-1">
         <Link
           href="/"
-          className="inline-flex items-center gap-2.5 rounded-xl text-[1.35rem] font-extrabold tracking-[-0.07em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          className="inline-flex items-center gap-2.5 rounded-xl text-[1.35rem] font-extrabold tracking-[-0.07em] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring [body:has(main[data-reader-page])_&]:text-[1.15rem]"
           aria-label="Foliveta home"
         >
-          <span className="grid size-10 place-items-center rounded-xl border border-[#e4e5fb] bg-linear-to-br from-white to-accent text-primary shadow-sm">
+          <span className="grid size-10 place-items-center rounded-xl border border-[#e4e5fb] bg-linear-to-br from-white to-accent text-primary shadow-sm [body:has(main[data-reader-page])_&]:size-8">
             <IconBook2 size={23} stroke={1.8} />
           </span>
           <span>
